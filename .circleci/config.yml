@@ -178,7 +178,7 @@ jobs:
       - aws-ecr/ecr_login:
           public_registry: true
       - run:
-          name: "Tag Image to be pushed to ECR!"
+          name: "Tag Image to be pushed to ECR"
           command: |
             docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/${ECR_REPO}:${CIRCLE_SHA1}-$(docker version -f {{.Server.Arch}})
             docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/${ECR_REPO}:latest-$(docker version -f {{.Server.Arch}})
@@ -266,7 +266,7 @@ workflows:
           cluster: ambassador-jim
           container_image_name_updates: container=ambassador-jim-amd,image-and-tag=public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/ambassador:${CIRCLE_SHA1}
           family: ambassador-jim-amd
-          service_name: ambassador-jim
+          service_name: ambassador-jim-amd
           profile_name: default
           requires:
             - "Publish Manifest to ECR"
@@ -277,7 +277,7 @@ workflows:
                 role_arn: arn:aws:iam::992382483259:role/ambassador-jim
                 role_session_name: example-session
           cluster: ambassador-jim
-          container_image_name_updates: container=ambassador-jim-amd,image-and-tag=public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/ambassador:${CIRCLE_SHA1}
+          container_image_name_updates: container=ambassador-jim-arm,image-and-tag=public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/ambassador:${CIRCLE_SHA1}
           family: ambassador-jim-arm
           service_name: ambassador-jim-arm
           profile_name: default
