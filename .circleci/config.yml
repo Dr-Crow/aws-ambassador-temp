@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Scan Repo
           command: |
-            echo "Scanning repo to determine type of project......"
+            echo "Scanning repo to determine type of project......."
             echo "Detected Python Project! Pulling Python Config.yml"
       - run:
           name: Pulling Config for Python Project
