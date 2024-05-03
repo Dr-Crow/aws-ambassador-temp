@@ -245,6 +245,25 @@ jobs:
       DOCKER_IMAGE: multi-arch-circleci-demo
       ECR_REPO: ambassador-jim
 
+  deploy-via-runner:
+    machine: true
+    resource_class: crowley-test/ubuntu-vm
+    steps:
+      - run:
+          name: Stop All Containers
+          command: docker rm -f $(docker ps -a -q) || echo "No Running Containers"
+      - run:
+          name: Remove All Containers
+          command: docker rmi -f $(docker images -q) || echo "No Images to Remove"
+      - run:
+          name: Pull Multi-Arch Container
+          command: docker pull public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/${ECR_REPO}:latest
+      - run:
+          name: Run Multi-Arch Container
+          command: docker run -d -p 80:8080 public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/${ECR_REPO}:latest
+    environment:
+      ECR_REPO: ambassador-jim
+
 
 workflows:
   demo:
@@ -319,5 +338,9 @@ workflows:
           family: ambassador-jim-arm
           service_name: ambassador-jim-arm
           profile_name: default
+          requires:
+            - "Publish Manifest to ECR"
+      - deploy-via-runner:
+          name: "Deploying App via EC2 Runner"
           requires:
             - "Publish Manifest to ECR"
