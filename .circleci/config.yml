@@ -249,10 +249,6 @@ jobs:
 workflows:
   demo:
     jobs:
-      - ggshield/scan:
-          name: Scanning for Secrets with GitGuardian
-          revision: $CIRCLE_SHA1
-          context: ambassador
       - test-demo:
           name: "Testing Python Code"
       - build-image:
