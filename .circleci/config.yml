@@ -178,7 +178,7 @@ jobs:
       - aws-ecr/ecr_login:
           public_registry: true
       - run:
-          name: "Tag Image to be pushed to ECR"
+          name: "Tag Image to be pushed to ECR!"
           command: |
             docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/${ECR_REPO}:${CIRCLE_SHA1}-$(docker version -f {{.Server.Arch}})
             docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} public.ecr.aws/${AWS_ECR_PUBLIC_REGISTRY_ALIAS}/${ECR_REPO}:latest-$(docker version -f {{.Server.Arch}})
